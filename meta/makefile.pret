@@ -1,0 +1,13 @@
+# This file provides instructions for packaging.
+
+`Exporter-Everything`
+	perl_version_from m`Exporter::Everything`;
+	version_from      m`Exporter::Everything`;
+	readme_from       m`Exporter::Everything`;
+	requires          p`Sub::Exporter 0`;
+	requires          p`Sub::Name 0`;
+	requires          p`Package::Stash 0`;
+	test_requires     p`thanks 0.001`;
+	test_requires     p`Test::Exception 0`;
+	test_requires     p`Test::More 0.61`.
+

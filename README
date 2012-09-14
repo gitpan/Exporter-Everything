@@ -1,0 +1,128 @@
+NAME
+    Exporter::Everything - just export everything
+
+SYNOPSIS
+       package My::Utils;
+       use Exporter::Everything;
+       sub foo { ... }
+       sub bar { ... }
+       sub baz { ... }
+       1;
+
+       package My::Script;
+       use My::Utils;
+       if ( foo() ) {
+          bar();
+       }
+       else {
+          baz();
+       }
+
+DESCRIPTION
+    Exporter, Sub::Exporter and so on make it pretty easy to export subs
+    from your package into the caller package. But not as easy as
+    Exporter::Everything!
+
+    Just "use Exporter::Everything" and suddenly your package will be able
+    to export everything.
+
+FAQ
+  What is exported by default?
+    Everything except functions which start with an underscore.
+
+    (Also, your "import" method itself is not exported.)
+
+  Isn't that a little dumb?
+    A *little*?!
+
+  But I have some helper functions I don't want to export.
+    If you name a function with a leading underscore then it is not exported
+    by default. Your caller can still request it explicitly:
+
+       use My::Utils '_helper';
+
+  But it really, really shouldn't be exported *at all*!
+    OK, name it with two leading underscores then. But you should be aware
+    that your caller will still be able to call that sub using its
+    package-qualified name. If you really don't want anybody else calling
+    it, make it a lexical sub.
+
+  What if I import functions like Scalar::Util "blessed" and don't want to re-export them.
+    Then clean up your namespace with something like "namespace::autoclean".
+
+  I need cool features like Exporter.pm's tags, or Sub::Exporter's generators.
+    Exporter::Everything sets up three tags for you automatically:
+
+    *   "-default"
+
+        All public functions (i.e. those without a leading underscore).
+
+    *   "-all"
+
+        All public and helper functions (i.e. those with zero or one leading
+        underscore).
+
+    *   "-const"
+
+        All functions with names matching "/^[A-Z]([A-Z0-9_]*[A-Z0-9])?$/".
+        The assumption is that these are "constants".
+
+    But there is not currently any facility to define your own tags.
+
+    You can create a generated sub "foo" by naming your generator
+    "_build_foo". You can safely define both "foo" and "_build_foo". When
+    people import your sub, they'll get the generated version.
+
+    Exporter::Everything uses Sub::Exporter behind the scenes, so the
+    caller-side features of Sub::Exporter (such as the ability to rename
+    imported subs) should just work.
+
+    If you need any other fancy Sub::Exporter features (e.g. collectors,
+    custom installers, etc), then you're out of luck.
+
+  I need to do some other fancy stuff in my "import" method.
+    OK...
+
+       sub import
+       {
+          my ($class, @args) = @_;  # copy @_, don't alter it!
+      
+          ...;
+      
+          require Exporter::Everything;
+          state $exporter = $class->Exporter::Everything::build_exporter;
+          goto $exporter;
+       }
+
+  How can I know what subs my package exports?
+    Exporter::Everything provides a tiny bit of introspection.
+
+       my %exported = My::Utils->Exporter::Everything::exportable_subs;
+
+    The %exported hash has sub names as keys, and generator coderefs as
+    values (or undef when there is no generator).
+
+  Add Perl 5.6 support!
+    *You* add Perl 5.6 support!
+
+BUGS
+    Please report any bugs to
+    <http://rt.cpan.org/Dist/Display.html?Queue=Exporter-Everything>.
+
+SEE ALSO
+    Sub::Exporter, namespace::clean.
+
+AUTHOR
+    Toby Inkster <tobyink@cpan.org>.
+
+COPYRIGHT AND LICENCE
+    This software is copyright (c) 2012 by Toby Inkster.
+
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
+
+DISCLAIMER OF WARRANTIES
+    THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR IMPLIED
+    WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
+    MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+

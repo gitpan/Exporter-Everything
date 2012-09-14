@@ -1,0 +1,23 @@
+# This file contains general metadata about the project.
+
+@prefix : <http://usefulinc.com/ns/doap#>.
+
+`Exporter-Everything`
+	:programming-language "Perl" ;
+	:shortdesc            "just export everything";
+	:homepage             <https://metacpan.org/release/Exporter-Everything>;
+	:download-page        <https://metacpan.org/release/Exporter-Everything>;
+	:bug-database         <http://rt.cpan.org/Dist/Display.html?Queue=Exporter-Everything>;
+	:repository           [ a :HgRepository; :browse <https://bitbucket.org/tobyink/p5-exporter-everything> ];
+	:created              2012-09-13;
+	:license              <http://dev.perl.org/licenses/>;
+	:maintainer           cpan:TOBYINK;
+	:developer            cpan:TOBYINK.
+
+<http://dev.perl.org/licenses/>
+	dc:title  "the same terms as the perl 5 programming language system itself".
+
+cpan:TOBYINK
+	foaf:name  "Toby Inkster";
+	foaf:mbox  <mailto:tobyink@cpan.org>.
+

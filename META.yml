@@ -1,0 +1,37 @@
+---
+abstract: 'just export everything'
+author:
+  - 'Toby Inkster <tobyink@cpan.org>'
+build_requires:
+  ExtUtils::MakeMaker: 6.59
+  Test::Exception: 0
+  Test::More: 0.61
+  thanks: 0.001
+configure_requires:
+  ExtUtils::MakeMaker: 6.59
+distribution_type: module
+dynamic_config: 0
+generated_by: 'Module::Install version 1.06'
+keywords: []
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+module_name: Exporter::Everything
+name: Exporter-Everything
+no_index:
+  directory:
+    - inc
+    - t
+    - xt
+requires:
+  Package::Stash: 0
+  Sub::Exporter: 0
+  Sub::Name: 0
+  perl: 5.8.0
+resources:
+  bugtracker: http://rt.cpan.org/Dist/Display.html?Queue=Exporter-Everything
+  homepage: https://metacpan.org/release/Exporter-Everything
+  license: http://dev.perl.org/licenses/
+  repository: https://bitbucket.org/tobyink/p5-exporter-everything
+version: 0.001
